@@ -18,7 +18,7 @@ after_script:
   
 branches:
   only:
-    - master
+    - origin
 env:
  global:
     - GH_REF: https://github.com/OctupleSakura/OctupleSakura.github.io.git
