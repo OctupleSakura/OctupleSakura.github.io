@@ -14,7 +14,7 @@ categories: 技术
 ## 实际解决
 这里先放一下[原文](https://segmentfault.com/q/1010000007435062?_ea=1354667)
 大概的意思是,前端在发送post请求的时候,需要在请求时加上 **credentials: include**,来表示允许其它域来发送cookie(懵,get不会吗- -,看来还是太菜
-嘛这里还是注意下,不同的ajax插件设置的方法也不太一样,比如我用的是axios插件那我是这么写的
+嘛这里还是注意下,不同的ajax插件设置的方法也不太一样,比如我用的是axios插件那我是这么写的0.0
 ```js
 axios.create({
         withCredentials: true // 允许携带cookie
