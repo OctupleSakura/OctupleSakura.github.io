@@ -8,5 +8,17 @@ script:
   - hexo g
 
 after_script:
-  - hexo d
+  - cd ./public
+  - git init 
+  - git config user.name "octuplesakura"
+  - git config user.email "2211503711@qq.com"
+  - git add .
+  - git commit -m "update docs"
+  - git push --force --quiet "https://${GitHub_Token}@${GH_REF}" master:master
   
+branches:
+  only:
+    - master
+env:
+ global:
+    - GH_REF: https://github.com/OctupleSakura/OctupleSakura.github.io.git
