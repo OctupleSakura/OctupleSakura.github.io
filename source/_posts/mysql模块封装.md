@@ -12,7 +12,7 @@ categories: 技术
 这两天都在捣鼓node,给项目做一个用户登录,用户注册加密的部分,涉及到sql这个地方也踩了大大小小的坑0.0
 最开始是打算用node的一个orm框架--[sequelize](http://docs.sequelizejs.com/)去做mysql的处理,然鹅还是放弃了(其实是卡在了一个不懂的错误上,也没有仔细去研究),有兴趣的朋友可以去玩一下QAQ
 总之最后,还是自己对mysql模块封装,完成了一个用户注册的功能
-
+<!-- more -->
 ## 具体封装实现
 我这里直接贴下代码
 ```js
@@ -55,7 +55,6 @@ const mysqlConnect = (sql,params) =>{
 }
 ```
 执行mysqlConnect函数,会连接数据库,并且会返回两个函数.一个是query,用来执行sql语句,一个是end用来结束连接。
-
 ## 封装调用
 这里放一下调用,作为参考0 0
 ```js

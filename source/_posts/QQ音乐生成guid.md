@@ -26,7 +26,7 @@ getGuid(){
 
 这个是在原文的方法上根据自己的需要进行的一个处理,生成guid之后需要将他放入cookie中并且将这个guid用于请求vkey上
 这里还做了一个判断,如果没有cookie的话就进行再生成.否则就一直用cookie里面的guid
-
+<!-- more -->
 ## 获取vkey
 这里首先放一个链接,用来请求[资源](https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?g_tk=1278911659&hostUin=0&format=jsonp&callback=callback&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&cid=205361747&uin=0&songmid='+songmid+'&filename=C400'+songmid+'.m4a&guid='+guid)
 
