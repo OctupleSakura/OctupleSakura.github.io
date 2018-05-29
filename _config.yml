@@ -5,7 +5,7 @@
 # Site
 title: QRC·Blog
 subtitle: 好想一直窝着QAQ
-description: 一点点进步！
+description: 我永远喜欢雪之下雪乃
 author: QRC
 language: zh-Hans
 timezone:
@@ -43,6 +43,22 @@ highlight:
   auto_detect: false
   tab_replace:
   
+## 看板娘
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  model:
+    use: koharu
+  display:
+    position: left
+    width: 100
+    height: 200
+  mobile:
+    show: true
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 #per_page: Posts displayed per page. (0 = disable pagination)
@@ -85,3 +101,14 @@ deploy:
   port: 4001
   compress: true
   header: true
+
+feed: # RSS订阅插件
+  type: atom
+  path: atom.xml
+  limit: 0
+
+plugins: hexo-generate-feed
+
+
+
+
