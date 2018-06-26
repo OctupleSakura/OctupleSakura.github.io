@@ -5,11 +5,13 @@ date: 2018-06-26 11:04:49
 tags:
 - node
 - 技术
+categories: 技术
 ---
 ### node后端转发请求踩坑
 最近想起来了要将之前的一个个人作品用gp挂起来,但是请求资源的地方用的本地代理进行跨域,于是又开始折腾node这里来进行一个后端的代理跨域获取资源T_T  
 ### http.request
 这个是后端http模块的一个方法,实际上爬虫也是用这个来获取到页面的资源然后进行解析,不过这里的话我们只是先用他来请求资源,先上代码0 0  
+<!--more-->
 ```js
 const http = require('http');
 const koa = require('koa');
