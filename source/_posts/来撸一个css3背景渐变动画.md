@@ -16,7 +16,7 @@ tags:
   .button{
     width:250px;
     height:35px;
-    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+    background:linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
   }
   ```
   嘛就是这样,兼容的话懒得添加前缀了2333,如果是ie9以下的话就只能使用filter这个属性去实现渐变的效果0.0,具体的实现各位就去百度一下吧~
@@ -29,7 +29,6 @@ tags:
         width:250px;
         height:35px;
         position:relative;
-        linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
      }
       .button::before{
          content:"";
@@ -49,7 +48,6 @@ tags:
         width:250px;
         height:35px;
         position:relative;
-        linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
       }
       .button::before{
          content:"";
