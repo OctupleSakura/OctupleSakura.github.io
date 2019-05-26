@@ -7,13 +7,12 @@ tags:
 
 [snabbdom](https://github.com/snabbdom/snabbdom)是非常经典的一个库了。
 曾经在知乎上看到有这样一个[问题](https://www.zhihu.com/question/29380608)，发现**virtual-dom**也是不少人都造过的轮子。
-先说句废话，snabbdom的牛逼之处更多在于思想，这一点在react和vue都用virtual-dom去做dom的处理可见一斑。
-
-> ps: 写这篇文章之前有点纠结，因为感觉自己没有做到100%的理解吧..
+snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精妙，这一点在react和vue都用virtual-dom的思想去做dom的处理而又对其做了优化这件事情中可见一斑。
+<!--more-->
 
 ### 前言
-  1. 实际上在刚看到源码的时候也是有些一脸懵逼吧，所以就从[第一个commit](https://github.com/snabbdom/snabbdom/commits/master?after=81da0c124257d393e29796a13e92f6f3016ac20d+447)开始看了，确实不失为一个好方法，虽然可能花的时间会稍微长一点0.0，好处在于可以了解到作者最初的想法。  
-  2. **diff**的部分实际上已经有非常非常多讲的很通俗的文章，所以仅仅只是一些个人的见解，写的辣鸡的地方可以评论补(peng)充(wo)啦，感谢！
+  1. 实际上在刚看到源码的时候也是有些一脸懵逼，所以就从[第一个commit](https://github.com/snabbdom/snabbdom/commits/master?after=81da0c124257d393e29796a13e92f6f3016ac20d+447)开始看了，确实不失为一个好方法，虽然可能花的时间会稍微长一点0.0，好处在于可以了解到作者最初的想法。  
+  2. **diff**的部分实际上已经有非常非常多讲的很通俗的文章，写的辣鸡的地方可以评论补(peng)充(wo)啦，感谢！
   
 ### 项目结构
   先来看下项目结构
