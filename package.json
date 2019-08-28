@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.7.1"
+    "version": "3.6.0"
   },
   "dependencies": {
     "hexo": "^3.2.0",
@@ -15,9 +15,14 @@
     "hexo-generator-tag": "^0.2.0",
     "hexo-helper-live2d": "^3.0.3",
     "hexo-renderer-ejs": "^0.3.0",
-    "hexo-renderer-marked": "^0.3.0",
+    "hexo-renderer-markdown-it": "^3.4.1",
     "hexo-renderer-stylus": "^0.3.1",
     "hexo-server": "^0.2.0",
-    "live2d-widget-model-koharu": "^1.0.5"
+    "jquery": "^3.4.1",
+    "live2d-widget-model-koharu": "^1.0.5",
+    "markdown-it-emoji": "^1.4.0",
+    "marked": "^0.7.0",
+    "prompt": "^1.0.0",
+    "twemoji": "^12.1.2"
   }
 }
