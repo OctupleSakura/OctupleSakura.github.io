@@ -3,6 +3,9 @@ title: snabbdom简单解读
 copyright: true
 date: 2019-04-01 10:55:17
 tags:
+- 前端
+- 技术
+categories: 技术
 ---
 
 [snabbdom](https://github.com/snabbdom/snabbdom)是非常经典的一个库了。
