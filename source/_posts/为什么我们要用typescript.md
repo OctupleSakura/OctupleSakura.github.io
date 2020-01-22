@@ -4,23 +4,25 @@ copyright: true
 date: 2019-10-09 11:58:59
 tags:
 - 前端
-- 技术
+- typescript
 categories: 技术
 ---
 
 如果让我选一个用了就离不开的东西，那么选项当中一定会有一个东西。
 那就是**typescript**
 
+<!--more-->
+
 ### 前言
 ts对于前端开发来说是个门槛。为什么呢？它的学习成本并不低，并且现状是，大部分人一开始都会对着满屏幕的红色波浪线一脸懵逼，不知所措，然后放弃。  
 
 实际上，半年前的我也是抱着这样的心态，因此，总得有足够充分的理由来让我们在学习成本比较高的情况下仍然去学习它，毕竟js确实已经够用了。  
-<img src="https://github.com/OctupleSakura/showImg/raw/master/blog/ts/faker-ll.jpg" style="width:300px"/>
+<img 
+  src="https://github.com/OctupleSakura/show-img/raw/master/blog/ts/faker-ll.jpg" style="width:300px;margin: 0;"
+/>
 
 超级感谢leader在这方面给我的帮助(已经是前leader了T_T)，真的学习到了很多。
 在这里，我强烈安利这个骚东西，它确确实实的能够提升你的开发体验，且听我慢慢道来。
-
-<!--more-->
 
 ### ts好玩在哪里
 先根据自己的经验来扯一下ts到底有什么吸引了我。
@@ -28,7 +30,9 @@ ts对于前端开发来说是个门槛。为什么呢？它的学习成本并不
 #### 规避类型引起的报错
 没有对比就没有伤害，诚然，js较为宽泛的语法降低了入门的门槛，但同时也有一定的弊端，相信用js的老哥们偶尔会遇到类型问题，引发报错，不胜其烦。
 ts在这方面做了很好的补足，通过给变量规定类型，很好的规避了很多许多类型相关的低级错误。
-<img src="https://github.com/OctupleSakura/showImg/raw/master/blog/ts/var-type.jpg" style="width:400px;margin-top: 10px;" />
+<img 
+  src="https://github.com/OctupleSakura/show-img/raw/master/blog/ts/var-type.jpg" style="width:400px;margin: 0;margin-top: 10px;" 
+/>
 
 另外一些静态类型该有的，ts也能给你提供，比如常见的interface，enum，泛型，装饰器等等，在此之上，还包含很多通过ts基础语法实现的一套api，例如Pick，Extract，Extract巴拉巴拉。
 因此在组件传值，接口数据方面很多都可以应用到，十分便利。
@@ -41,7 +45,9 @@ ts有一部分的好处还体现在**接口数据**上，在写接口的过程�
 
 举个简单的栗子0.0
 如果我们在做一个发送消息的接口，这个消息有不同的类型，例如文字消息、音频消息、视频消息等等，我们要去怎么设计它？
-<img src="https://github.com/OctupleSakura/showImg/raw/master/blog/ts/jojo.jpg" style="width:200px;margin-top: 10px;" />
+<img 
+  src="https://github.com/OctupleSakura/show-img/raw/master/blog/ts/jojo.jpg" style="width:200px;margin: 0;margin-top: 10px;" 
+/>
 相信你肯定就一下想到了做一个message的base interface，然后通过extends来实现各种不同类型的消息。
 nice，那先贴一下我的想法，有更好的思路还请多多指教~
 ```js

@@ -3,12 +3,12 @@ title: 骨架屏在Vue中的简单实现
 copyright: true
 date: 2019-01-25 10:24:12
 tags: 
+- 前端
 - vue 
-- webpack
 categories: 技术
 ---
 为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅。  
-![facebook](https://github.com/OctupleSakura/showImg/raw/master/blog/skeleton.jpg)
+![facebook](https://github.com/OctupleSakura/show-img/raw/master/blog/skeleton/skeleton.jpg)
 我们在打开facebook的时候也可以看到这玩意儿，尽管他们很早就用上了。  
 <!--more-->
 ### 实现

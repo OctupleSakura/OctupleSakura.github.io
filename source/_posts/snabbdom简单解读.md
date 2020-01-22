@@ -19,7 +19,7 @@ snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精
   
 ### 项目结构
   先来看下项目结构
-  ![项目结构](https://github.com/OctupleSakura/showImg/raw/master/blog/snabbdom/snabbdom-tree.jpg)
+  ![项目结构](https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/snabbdom-tree.jpg)
   modules文件夹里面都是拆分出来的简单替换和对比的一些函数，都比较简单可以自行查看。
   hero文件里面放了snabbdom的钩子函数，也就是hook，会在snabbom的init函数调用的时候收集，在对应的时候执行，同时里面通过**requestAnimationFrame**做了一些动画上的优化。
   其他比较核心的有   
@@ -159,4 +159,4 @@ snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精
 第一个commit十分简单，可以慢慢翻到补充稍微完整的源码之后再跳着看，这样可能会比较快。 
 最近翻了翻pr，发现作者已经很久没有合并pr或者更新代码了，ci的test好像也有问题..  
 原来是有了新欢[turbine](https://github.com/funkia/turbine)，好像也蛮有意思的，就是相关资料有点少，之后有空的话去看看啦~
-<img src="https://github.com/OctupleSakura/showImg/raw/master/blog/snabbdom/sticker.webp" style="width:300px" > 
+<img src="https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/sticker.webp" style="width:300px" > 
