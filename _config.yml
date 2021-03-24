@@ -4,8 +4,8 @@
 
 # Site
 title: QRC·Blog
-subtitle: 好想一直窝着QAQ
-description: 我永远喜欢雪之下雪乃
+subtitle: 好想一直窝着 
+description: Follow your heart, pick up the pace
 author: Octuple Sakura
 language: zh-Hans
 timezone:
@@ -42,7 +42,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-  
+
 ## 看板娘
 live2d:
   enable: false
@@ -88,7 +88,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: themia
+theme: cards
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -125,6 +125,7 @@ markdown:
     - markdown-it-footnote
     - markdown-it-ins
     - markdown-it-sub
+    - markdown-it-checkbox
     - markdown-it-sup
     - markdown-it-emoji
   anchors:
@@ -133,5 +134,4 @@ markdown:
     permalink: false
     permalinkClass: header-anchor
     permalinkSymbol: ¶
-
 

@@ -8,12 +8,12 @@ tags:
 categories: 技术
 ---
 **rollup**是个什么东东，和**webpack**一样,是我js模块打包器哒！但是更加的轻量级，并且上手十分简单
-
+<!--more-->
 ## 和webpack的对比
 ### 1. tree-shaking
 利用es模块的静态分析，以及作用域分析等等，找到无用的代码，在打包的时候删除，从而达到缩减代码体积的目的，这也是为什么如果采用了**commonjs**的模式便无法进行**tree-shaking**的原因  
 而这一方面rollup首先提出并实现，webpack从2开始支持，并且ugilfy也支持做这个工作，babel更新babel7，之后也优化了关于一些副作用上面的问题，同时rollup做了程序流分析的原因，这一方面做得比较好  
-<!--more-->
+
 实际上目前的打包工具的tree-shaking都会有些缺陷，原因基本都是因为函数的**副作用**导致，并且经过babel打包过后，如果你定义了类的话，为了符合es6的语义在编译之后会有一个 **_createClass**函数，函数里面采用**Object.defineProperty**来定义类里面的方法，从而产生了副作用，无法被**tree-shaking**
 <img src="https://github.com/OctupleSakura/show-img/blob/master/blog/rollup/parse.png?raw=true" style="border: 1px solid #eeeeee;margin: 10px 0;"/>
 而如果开启babel的**loose模式**的话，会直接通过在原型链上定义方法的形式来实现，因此loose模式下的类定义基本可以被正确的**tree-shaking**   

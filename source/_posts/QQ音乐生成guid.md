@@ -2,12 +2,12 @@
 title: QQ音乐生成guid
 date: 2018-05-14 17:40:08
 tags: 
-- api
+- 前端
 - QQ音乐
 categories: 技术
 ---
-因为之前在用的一个接口突然就403了,因此不得不解析一下QQ音乐原先是怎么获取到音乐资源,QQ音乐的搜索等等应该都挺好拿到的,因为那边没有做太多处理所以就不写了,这里记录一下防止自己忘记,日后也可以给其他有需要的人一个参考
-
+因为之前在用的一个接口突然就403了,因此不得不解析一下QQ音乐原先是怎么获取到音乐资源,QQ音乐的搜索等等应该都挺好拿到的,因为那边没有做太多处理所以就不写了
+<!-- more -->
 ## 生成guid
 首先先放一下翻了好多文章才找到的一个方法
 
@@ -26,7 +26,7 @@ getGuid(){
 
 这个是在原文的方法上根据自己的需要进行的一个处理,生成guid之后需要将他放入cookie中并且将这个guid用于请求vkey上
 这里还做了一个判断,如果没有cookie的话就进行再生成.否则就一直用cookie里面的guid
-<!-- more -->
+
 ## 获取vkey
 这里首先放一个链接,用来请求[资源](https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?g_tk=1278911659&hostUin=0&format=jsonp&callback=callback&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&cid=205361747&uin=0&songmid='+songmid+'&filename=C400'+songmid+'.m4a&guid='+guid)
 

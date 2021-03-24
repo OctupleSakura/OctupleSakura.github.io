@@ -7,10 +7,10 @@ tags:
 - vue 
 categories: 技术
 ---
-为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅。  
-![facebook](https://github.com/OctupleSakura/show-img/raw/master/blog/skeleton/skeleton.jpg)
-我们在打开facebook的时候也可以看到这玩意儿，尽管他们很早就用上了。  
+为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅  
 <!--more-->
+![facebook](https://github.com/OctupleSakura/show-img/raw/master/blog/skeleton/skeleton.jpg)
+我们在打开facebook的时候也可以看到这玩意儿，尽管他们很早就用上了  
 ### 实现
 首先先来说明一下我们使用的插件[vue-skeleton-webpack-plugin](https://github.com/lavas-project/vue-skeleton-webpack-plugin)，是lavas的webpack相关插件  
 大体分为**3步**:  
