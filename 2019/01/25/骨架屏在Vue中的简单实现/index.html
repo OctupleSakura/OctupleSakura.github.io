@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>骨架屏在Vue中的简单实现 | QRC·Blog</title>
+
+
+    <meta name="keywords" content="前端, vue">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅">
+<meta name="keywords" content="前端,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="骨架屏在Vue中的简单实现">
+<meta property="og:url" content="https://octuplesakura.github.io/2019/01/25/骨架屏在Vue中的简单实现/index.html">
+<meta property="og:site_name" content="QRC·Blog">
+<meta property="og:description" content="为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/OctupleSakura/show-img/raw/master/blog/skeleton/skeleton.jpg">
+<meta property="og:updated_time" content="2021-03-10T11:12:05.990Z">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="骨架屏在Vue中的简单实现">
+<meta name="twitter:description" content="为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅">
+<meta name="twitter:image" content="https://github.com/OctupleSakura/show-img/raw/master/blog/skeleton/skeleton.jpg">
+
+
+    <link rel="stylesheet" href="/css/style/main.css"> 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+</head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">OctupleSakura</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        骨架屏在Vue中的简单实现
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/01/" class="post-meta__date button">2019-01-25</a>
+        
+    <span class="separate-dot"></span><a href="/categories/技术/" class="button">技术</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>为什么需要骨架屏？骨架屏其实是一项非常不错的优化，可以有效减少pwa项目在渲染dom过程中的白屏时间，相对于loading来说好处在于能让用户感受到项目是在逐步加载，对于用户的感知会显得更加流畅</p>
+<a id="more"></a>
+<p><img src="https://github.com/OctupleSakura/show-img/raw/master/blog/skeleton/skeleton.jpg" alt="facebook"><br>
+我们在打开facebook的时候也可以看到这玩意儿，尽管他们很早就用上了</p>
+<h3 id="实现">实现</h3>
+<p>首先先来说明一下我们使用的插件<a href="https://github.com/lavas-project/vue-skeleton-webpack-plugin" target="_blank" rel="noopener">vue-skeleton-webpack-plugin</a>，是lavas的webpack相关插件<br>
+大体分为<strong>3步</strong>:</p>
+<ol>
+<li>创建骨架屏vue文件</li>
+<li>创建skeleton的实例</li>
+<li>在webpack的配置文件中导入skeleton实例</li>
+</ol>
+<p>首先我们需要写一个能让webpack去渲染的一个骨架屏模板，就是skeleton.vue,样式可以自己想，这里就直接拿官方的demo来用了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//skeleton.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"skeleton-wrapper"</span>&gt;</span><br><span class="line">    &lt;section <span class="class"><span class="keyword">class</span></span>=<span class="string">"skeleton-block"</span>&gt;</span><br><span class="line">      &lt;!-- eslint-disable vue/max-len --&gt;</span><br><span class="line">    &lt;<span class="regexp">/section&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">export default &#123;</span></span><br><span class="line"><span class="regexp">  name: 'Skeleton',</span></span><br><span class="line"><span class="regexp">&#125;;</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.skeleton-block &#123;</span><br><span class="line">  display: flex;</span><br><span class="line">  flex-direction: column;</span><br><span class="line">  padding: <span class="number">16</span>px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br></pre></td></tr></table></figure>
+<p>创建skeleton实例文件，导入刚刚的文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> Skeleton <span class="keyword">from</span> <span class="string">'./Skeleton.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    Skeleton,</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(Skeleton),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>最后，在vue.config.js里面，用插件去引用实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里要先把插件安装好</span></span><br><span class="line"><span class="keyword">const</span> SkeletonWebpackPlugin = <span class="built_in">require</span>(<span class="string">'vue-skeleton-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">let</span> option = &#123;</span><br><span class="line">  configureWebpack: &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">      <span class="comment">//对应插件</span></span><br><span class="line">      <span class="keyword">new</span> SkeletonWebpackPlugin(&#123;</span><br><span class="line">        webpackConfig: &#123;</span><br><span class="line">          entry: &#123;</span><br><span class="line">            <span class="comment">//入口文件路径</span></span><br><span class="line">            app: path.join(__dirname, <span class="string">'./src/skeleton.entry.js'</span>),</span><br><span class="line">          &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">//quiet 选填，在服务端渲染时是否需要输出信息到控制台</span></span><br><span class="line">        quiet: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">//minimize 选填 SPA 下是否需要压缩注入 HTML 的 JS 代码</span></span><br><span class="line">        minmize: <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反正直接照着官方库中的<a href="https://github.com/lavas-project/vue-skeleton-webpack-plugin/tree/master/examples" target="_blank" rel="noopener">examples</a>写就完了，很详细了(逃</p>
+<h3 id="踩过的坑">踩过的坑</h3>
+<p>这里要说明一下，在vue-cli下，实际上<a href="https://github.com/lavas-project/vue-skeleton-webpack-plugin" target="_blank" rel="noopener">vue-skeleton-webpack-plugin</a>这个插件在非线上环境下是有坑的,skeleton的样式会渲染不出来，在官方库的issues当中已经明确被标为bug了，具体的可以看<a href="https://github.com/lavas-project/vue-skeleton-webpack-plugin/issues/52" target="_blank" rel="noopener">这里</a></p>
+<h3 id="参考链接">参考链接</h3>
+<p><a href="https://juejin.im/post/5b79a2786fb9a01a18267362" target="_blank" rel="noopener">Vue项目骨架屏注入实践</a> — 介绍了大概的概念和几种注入方式<br>
+<a href="https://segmentfault.com/a/1190000014832185" target="_blank" rel="noopener">Vue项目骨架屏注入实践</a> — 腾讯老哥在思否的一篇文章，将服务端注入放到了前端来处理，使用了<strong>vue-server-renderer</strong>插件<br>
+<a href="https://lavas.baidu.com/guide/v2/webpack/vue-skeleton-webpack-plugin" target="_blank" rel="noopener">lavas的webpack相关</a> — lavas是一套vue的pwa解决方案，但是我们只需要使用到相关的一个插件来完成我们想要的</p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2021-03-10</p></div> 
+    <div class="post-meta__cats"><a href="/categories/技术/" class="post-cats__link button">技术</a><a href="/tags/前端/" class="post-tags__link button"># 前端</a><a href="/tags/vue/" class="post-tags__link button"># vue</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/04/01/snabbdom简单解读/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            snabbdom简单解读
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2018/05/14/QQ音乐生成guid/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            QQ音乐生成guid
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>Comments</h4>
+    
+    <div id="disqus_thread">Unable to load Disqus, please make sure your network can access.</div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2021 <a href="/">QRC·Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+    <script>
+        function loadComment() {
+            window.disqus_config = function () {
+                this.page.url = 'https://octuplesakura.github.io/2019/01/25/骨架屏在Vue中的简单实现/';
+                this.page.identifier = '2019/01/25/骨架屏在Vue中的简单实现/';
+            };
+            (function(){
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + 'sakuraoctuple' + '.disqus.com/embed.js';
+                (document.head || document.body).appendChild(dsq);
+            })();
+        }
+    
+        var runningOnBrowser = typeof window !== "undefined";
+        var isBot = runningOnBrowser && !("onscroll" in window) || typeof navigator !== "undefined" && /(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator.userAgent);
+        var supportsIntersectionObserver = runningOnBrowser && "IntersectionObserver" in window;
+    
+        setTimeout(function () {
+            if (!isBot && supportsIntersectionObserver) {
+                var comment_observer = new IntersectionObserver(function(entries) {
+                    if (entries[0].isIntersecting) {
+                        loadComment();
+                        comment_observer.disconnect();
+                    }
+                }, { threshold: [0] });
+                comment_observer.observe(document.getElementById('comment'));
+            } else {
+                loadComment();
+            }
+        }, 1);
+    </script>
+
+
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>

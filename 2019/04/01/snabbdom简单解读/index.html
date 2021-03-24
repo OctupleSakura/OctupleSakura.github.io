@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>snabbdom简单解读 | QRC·Blog</title>
+
+
+    <meta name="keywords" content="前端">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="snabbdom是非常经典的一个库了。 曾经在知乎上看到有这样一个问题，发现virtual-dom也是不少人都造过的轮子。 snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精妙，这一点在react和vue都用virtual-dom的思想去做dom的处理而又对其做了优化这件事情中可见一斑。">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="snabbdom简单解读">
+<meta property="og:url" content="https://octuplesakura.github.io/2019/04/01/snabbdom简单解读/index.html">
+<meta property="og:site_name" content="QRC·Blog">
+<meta property="og:description" content="snabbdom是非常经典的一个库了。 曾经在知乎上看到有这样一个问题，发现virtual-dom也是不少人都造过的轮子。 snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精妙，这一点在react和vue都用virtual-dom的思想去做dom的处理而又对其做了优化这件事情中可见一斑。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/snabbdom-tree.jpg">
+<meta property="og:image" content="https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/sticker.webp">
+<meta property="og:updated_time" content="2021-03-09T04:52:57.624Z">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="snabbdom简单解读">
+<meta name="twitter:description" content="snabbdom是非常经典的一个库了。 曾经在知乎上看到有这样一个问题，发现virtual-dom也是不少人都造过的轮子。 snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精妙，这一点在react和vue都用virtual-dom的思想去做dom的处理而又对其做了优化这件事情中可见一斑。">
+<meta name="twitter:image" content="https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/snabbdom-tree.jpg">
+
+
+    <link rel="stylesheet" href="/css/style/main.css"> 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none">
+        
+    
+
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+</head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">OctupleSakura</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        snabbdom简单解读
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2019/04/" class="post-meta__date button">2019-04-01</a>
+        
+    <span class="separate-dot"></span><a href="/categories/技术/" class="button">技术</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p><a href="https://github.com/snabbdom/snabbdom" target="_blank" rel="noopener">snabbdom</a>是非常经典的一个库了。<br>
+曾经在知乎上看到有这样一个<a href="https://www.zhihu.com/question/29380608" target="_blank" rel="noopener">问题</a>，发现<strong>virtual-dom</strong>也是不少人都造过的轮子。<br>
+snabbdom的牛逼之处更多在于思想，而不是在于代码有多么的精妙，这一点在react和vue都用virtual-dom的思想去做dom的处理而又对其做了优化这件事情中可见一斑。</p>
+<a id="more"></a>
+<h3 id="前言">前言</h3>
+<ol>
+<li>实际上在刚看到源码的时候也是有些一脸懵逼，所以就从<a href="https://github.com/snabbdom/snabbdom/commits/master?after=81da0c124257d393e29796a13e92f6f3016ac20d+447" target="_blank" rel="noopener">第一个commit</a>开始看了，确实不失为一个好方法，虽然可能花的时间会稍微长一点0.0，好处在于可以了解到作者最初的想法。</li>
+<li><strong>diff</strong>的部分实际上已经有非常非常多讲的很通俗的文章，写的辣鸡的地方可以评论补(peng)充(wo)啦，感谢！</li>
+</ol>
+<h3 id="项目结构">项目结构</h3>
+<p>先来看下项目结构<br>
+<img src="https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/snabbdom-tree.jpg" alt="项目结构"><br>
+modules文件夹里面都是拆分出来的简单替换和对比的一些函数，都比较简单可以自行查看。<br>
+hero文件里面放了snabbdom的钩子函数，也就是hook，会在snabbom的init函数调用的时候收集，在对应的时候执行，同时里面通过<strong>requestAnimationFrame</strong>做了一些动画上的优化。<br>
+其他比较核心的有</p>
+<ul>
+<li>
+<p>h函数（传入对应参数生成vnode）</p>
+</li>
+<li>
+<p>html（domapis一些dom-api封装）</p>
+</li>
+<li>
+<p>snabbdoms.bundle（打包的一些处理）</p>
+</li>
+<li>
+<p>snabbdom（主文件核心逻辑都在这里，主要分析这个里面的代码）</p>
+</li>
+<li>
+<p>thunk（对patch的一些优化）</p>
+</li>
+<li>
+<p>vnode（定义了virtual-dom的结构）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> interface VNodeData &#123;</span><br><span class="line">  props?: Props;</span><br><span class="line">  attrs?: Attrs;</span><br><span class="line">  class?: Classes;</span><br><span class="line">  style?: VNodeStyle;</span><br><span class="line">  dataset?: Dataset;</span><br><span class="line">  on?: On;</span><br><span class="line">  hero?: Hero;</span><br><span class="line">  attachData?: AttachData;</span><br><span class="line">  hook?: Hooks;</span><br><span class="line">  key?: Key;</span><br><span class="line">  ns?: string; <span class="comment">// for SVGs</span></span><br><span class="line">  fn?: <span class="function"><span class="params">()</span> =&gt;</span> VNode; <span class="comment">// for thunks</span></span><br><span class="line">  args?: <span class="built_in">Array</span>&lt;any&gt;; <span class="comment">// for thunks</span></span><br><span class="line">  [key: string]: any; <span class="comment">// for any other 3rd party module</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>vnode的结构可以从定义的接口看出</p>
+<h3 id="分析">分析</h3>
+<p><a href="https://github.com/snabbdom/snabbdom/blob/master/src/snabbdom.ts#L195" target="_blank" rel="noopener">这段代码</a>也就是我们常说的diff，也就是updateChildren的这个函数，接受了两个children数组来进行对比</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateChildren</span>(<span class="params">parentElm: Node,</span></span></span><br><span class="line"><span class="function"><span class="params">                        oldCh: Array&lt;VNode&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">                        newCh: Array&lt;VNode&gt;,</span></span></span><br><span class="line"><span class="function"><span class="params">                        insertedVnodeQueue: VNodeQueue</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> oldStartIdx = <span class="number">0</span>, newStartIdx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">let</span> oldEndIdx = oldCh.length - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">let</span> oldStartVnode = oldCh[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">let</span> oldEndVnode = oldCh[oldEndIdx];</span><br><span class="line">  <span class="keyword">let</span> newEndIdx = newCh.length - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">let</span> newStartVnode = newCh[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">let</span> newEndVnode = newCh[newEndIdx];</span><br><span class="line">  <span class="keyword">let</span> oldKeyToIdx: any;</span><br><span class="line">  <span class="keyword">let</span> idxInOld: number;</span><br><span class="line">  <span class="keyword">let</span> elmToMove: VNode;</span><br><span class="line">  <span class="keyword">let</span> before: any;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//通过以上的几个变量来做到逐个的比较</span></span><br><span class="line">  <span class="comment">//主要在于oldStart和oldEnd的几个变量</span></span><br><span class="line">  <span class="comment">//通过封装好的sameVnode()的函数来对比，具体的可以自行查看</span></span><br><span class="line">  <span class="comment">//idx控制着每一次循环对比的元素，具体的变化看每一个判断规则所做的变化</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;= newEndIdx) &#123;</span><br><span class="line">    <span class="keyword">if</span> (oldStartVnode == <span class="literal">null</span>) &#123; <span class="comment">//没有oldStartVnode的时候我们把第一个oldCh的第一个Vnode保存起来</span></span><br><span class="line">      oldStartVnode = oldCh[++oldStartIdx]; <span class="comment">// Vnode might have been moved left</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (oldEndVnode == <span class="literal">null</span>) &#123; </span><br><span class="line">      oldEndVnode = oldCh[--oldEndIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newStartVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">      newStartVnode = newCh[++newStartIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newEndVnode == <span class="literal">null</span>) &#123; <span class="comment">//到这位置基本都和上面类似</span></span><br><span class="line">      newEndVnode = newCh[--newEndIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newStartVnode)) &#123; <span class="comment">//以上的判断都是设置好变量，这一个判断开始就是真正开始对比的逻辑，直接判断新旧vnode的头元素是否相等</span></span><br><span class="line">      patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);</span><br><span class="line">      oldStartVnode = oldCh[++oldStartIdx];</span><br><span class="line">      newStartVnode = newCh[++newStartIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newEndVnode)) &#123; <span class="comment">//同上，对比尾vnode</span></span><br><span class="line">      patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue);</span><br><span class="line">      oldEndVnode = oldCh[--oldEndIdx];</span><br><span class="line">      newEndVnode = newCh[--newEndIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newEndVnode)) &#123; <span class="comment">//对比old头vnode和new尾vnode，相等说明元素移到了末尾</span></span><br><span class="line">      patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);</span><br><span class="line">      api.insertBefore(parentElm, oldStartVnode.elm <span class="keyword">as</span> Node, api.nextSibling(oldEndVnode.elm <span class="keyword">as</span> Node));</span><br><span class="line">      oldStartVnode = oldCh[++oldStartIdx];</span><br><span class="line">      newEndVnode = newCh[--newEndIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newStartVnode)) &#123; <span class="comment">//基本同上，对比old尾vnode和new头vnode相同的话说明元素被移到了头部</span></span><br><span class="line">      patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);</span><br><span class="line">      api.insertBefore(parentElm, oldEndVnode.elm <span class="keyword">as</span> Node, oldStartVnode.elm <span class="keyword">as</span> Node);</span><br><span class="line">      oldEndVnode = oldCh[--oldEndIdx];</span><br><span class="line">      newStartVnode = newCh[++newStartIdx];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//以上  在所有对比条件都不成立之后，说明基本上的对比逻辑基本走完，剩下的基本是不等的vnode</span></span><br><span class="line">      <span class="comment">// 通过createKeyToOldIdx创建一个json，key和index</span></span><br><span class="line">      <span class="keyword">if</span> (oldKeyToIdx === <span class="literal">undefined</span>) &#123;</span><br><span class="line">        oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);</span><br><span class="line">      &#125;</span><br><span class="line">      idxInOld = oldKeyToIdx[newStartVnode.key <span class="keyword">as</span> string];</span><br><span class="line">      <span class="comment">//扔一个newStartVnode的key到json中，如果没有说明这个newStartVnode是新的节点，直接创建并且插到最前面</span></span><br><span class="line">      <span class="keyword">if</span> (isUndef(idxInOld)) &#123; <span class="comment">// New element</span></span><br><span class="line">        api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm <span class="keyword">as</span> Node);</span><br><span class="line">        newStartVnode = newCh[++newStartIdx];</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//如果在json中找到了对应的节点，说明已经有了变更</span></span><br><span class="line">        elmToMove = oldCh[idxInOld];</span><br><span class="line">        <span class="comment">//这里需要判断一下sel是否相等，不等说明节点类型已经改变创建新节点</span></span><br><span class="line">        <span class="keyword">if</span> (elmToMove.sel !== newStartVnode.sel) &#123;</span><br><span class="line">          api.insertBefore(parentElm, createElm(newStartVnode, insertedVnodeQueue), oldStartVnode.elm <span class="keyword">as</span> Node);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//如果节点类型相等的话就直接扔到patchVnode 对应修改一遍属性，并且移动到最前面</span></span><br><span class="line">          patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);</span><br><span class="line">          oldCh[idxInOld] = <span class="literal">undefined</span> <span class="keyword">as</span> any;</span><br><span class="line">          api.insertBefore(parentElm, (elmToMove.elm <span class="keyword">as</span> Node), oldStartVnode.elm <span class="keyword">as</span> Node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//那最后 我们每处理完一个newVnode就将idx+1</span></span><br><span class="line">        newStartVnode = newCh[++newStartIdx];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//如果这里StartIdx依旧小于EndIdx的话， 说明有多余的节点</span></span><br><span class="line">  <span class="keyword">if</span> (oldStartIdx &lt;= oldEndIdx || newStartIdx &lt;= newEndIdx) &#123;        </span><br><span class="line">    <span class="comment">//这一段主要用于删除掉或者添加进去多余或者缺失的节点</span></span><br><span class="line">    <span class="comment">//这一段说明 old节点已经处理完了，我们需要newVnode创建并添加</span></span><br><span class="line">    <span class="keyword">if</span> (oldStartIdx &gt; oldEndIdx) &#123;</span><br><span class="line">      before = newCh[newEndIdx+<span class="number">1</span>] == <span class="literal">null</span> ? <span class="literal">null</span> : newCh[newEndIdx+<span class="number">1</span>].elm;</span><br><span class="line">      addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">//这一段说明是new节点处理完成，直接删除多余节点</span></span><br><span class="line">      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上把代码都做了一个注释，有兴趣的话可以拿张纸笔画画图会比较清晰(自己也是这么做的)。</p>
+<h3 id="一些疑惑和疏漏">一些疑惑和疏漏</h3>
+<ol>
+<li>在查看比较前面的commit发现在最开始有用到<strong>createDocumentFragment</strong>这个api来避免浏览器多次渲染导致的回流和重绘，但发现后面给移除了…不太明白0.0</li>
+<li>hook这个地方实际上有个很小的疑惑，在init的时候可以发现他的hook数组里面一般只有一个回调需要执行，为什么以数组的形式保存，可能是后面还有没写的hook？</li>
+<li>patch的部分也可以细讲(懒了)</li>
+<li>hook的几个函数没讲出来，之后再回头看看吧(咕咕咕)</li>
+</ol>
+<h3 id="水文结束">水文结束</h3>
+<p>优化的细节实际上很多，阅读优秀的开源项目能收获到不少平时写代码的技巧。<br>
+第一个commit十分简单，可以慢慢翻到补充稍微完整的源码之后再跳着看，这样可能会比较快。<br>
+最近翻了翻pr，发现作者已经很久没有合并pr或者更新代码了，ci的test好像也有问题…<br>
+原来是有了新欢<a href="https://github.com/funkia/turbine" target="_blank" rel="noopener">turbine</a>，好像也蛮有意思的，就是相关资料有点少，之后有空的话去看看啦~<br>
+<img src="https://github.com/OctupleSakura/show-img/raw/master/blog/snabbdom/sticker.webp" style="width:300px"></p>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>updated at 2021-03-09</p></div> 
+    <div class="post-meta__cats"><a href="/categories/技术/" class="post-cats__link button">技术</a><a href="/tags/前端/" class="post-tags__link button"># 前端</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2019/05/20/日文系列-根据状态变化的语法/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            日文系列 - 根据状态而变化的语法
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2019/01/25/骨架屏在Vue中的简单实现/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            骨架屏在Vue中的简单实现
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>Comments</h4>
+    
+    <div id="disqus_thread">Unable to load Disqus, please make sure your network can access.</div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2021 <a href="/">QRC·Blog</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+    <script>
+        function loadComment() {
+            window.disqus_config = function () {
+                this.page.url = 'https://octuplesakura.github.io/2019/04/01/snabbdom简单解读/';
+                this.page.identifier = '2019/04/01/snabbdom简单解读/';
+            };
+            (function(){
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + 'sakuraoctuple' + '.disqus.com/embed.js';
+                (document.head || document.body).appendChild(dsq);
+            })();
+        }
+    
+        var runningOnBrowser = typeof window !== "undefined";
+        var isBot = runningOnBrowser && !("onscroll" in window) || typeof navigator !== "undefined" && /(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator.userAgent);
+        var supportsIntersectionObserver = runningOnBrowser && "IntersectionObserver" in window;
+    
+        setTimeout(function () {
+            if (!isBot && supportsIntersectionObserver) {
+                var comment_observer = new IntersectionObserver(function(entries) {
+                    if (entries[0].isIntersecting) {
+                        loadComment();
+                        comment_observer.disconnect();
+                    }
+                }, { threshold: [0] });
+                comment_observer.observe(document.getElementById('comment'));
+            } else {
+                loadComment();
+            }
+        }, 1);
+    </script>
+
+
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
